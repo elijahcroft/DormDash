@@ -1,0 +1,53 @@
+// RPI pico pinctrl bindings: zephyr/include/zephyr/dt-bindings/pinctrl/rpi-pico-pinctrl-common.h
+
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_uart0;
+        zephyr,shell-uart = &cdc_acm_uart0;
+    };
+
+    motor_pwms0: motor_pwms {
+        
+        //min-pulse = <PWM_USEC(700)>;
+        //max-pulse = <PWM_USEC(2500)>;
+
+        pwms = <&pwm 9 PWM_MSEC(20) PWM_POLARITY_NORMAL>, // PWM_CH0_A
+               <&pwm 8 PWM_MSEC(20) PWM_POLARITY_NORMAL>, // PWM_CH0_A
+               <&pwm 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>, // PWM_CH0_A
+               <&pwm 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>; // PWM_CH0_A
+
+        //<&pwm 1 PWM_MSEC(20) PWM_POLARITY_NORMAL>; // PWM_CH0_B
+        //motor1_forward_spec = <&pwm 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>; // PWM_CH1_A
+        //motor1_backward_spec = <&pwm 3 PWM_MSEC(20) PWM_POLARITY_NORMAL>; // PWM_CH1_B
+    };
+};
+
+&zephyr_udc0 {
+    cdc_acm_uart0: cdc_acm_uart0 {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+// I2C bus
+&i2c0 {
+    status = "okay";
+
+    lidar0: lidar@29 {
+        compatible = "st,vl53l0x";
+        reg = <0x29>; // I2C Address
+        status = "okay";
+    };
+
+};
+
+// PWM
+// Params: zephyr/dts/bindings/pwm/raspberrypi,pico-pwm.yaml
+&pwm {
+    status = "okay";
+};
+
+&pwm_ch4b_default {
+    group1 {
+        pinmux = <PWM_4B_P25>, <PWM_4B_P9>, <PWM_4A_P8>, <PWM_0A_P16>, <PWM_0B_P17>, <PWM_0A_P0>, <PWM_0B_P1>;
+    };
+};

@@ -1,0 +1,7 @@
+manifest:
+  projects:
+    - name: zephyr
+      revision: v4.2.0
+      import:
+        name-allowlist:
+            #- nanopb
