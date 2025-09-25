@@ -34,14 +34,6 @@ This project explores robotics, embedded systems, and web-based interfaces for a
 ### Compute
 - Raspberry Pi 5 (4GB RAM) running Ubuntu 22  
 
-### Motors & Motor Control
-- TBA  
-
-### Battery
-- TBA  
-
-### Chassis Hardware
-- TBA  
 
 ---
 
