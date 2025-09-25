@@ -2,43 +2,15 @@
 
 LOG_MODULE_REGISTER(pwm_motor);
 
-#define PWM_DEV_NODE DT_PATH(soc, pwm_40050000)
+#define PWM_NODE DT_NODELABEL(motor_pwms)
+#define MIN_PULSE_NS DT_PROP(PWM_NODE, min_pulse)
+#define MAX_PULSE_NS DT_PROP(PWM_NODE, max_pulse)
+#define STEP PWM_USEC(5)
 
-static const struct device *const pwn_dev = DEVICE_DT_GET(PWM_DEV_NODE);
-
-#define PWM_PERIOD_USEC 50 // 50 micro-sec = 20k HZ
-
-static const struct pwm_dt_spec motor0_forward_spec = {
-	.dev = pwn_dev,
-	.channel = 0,
-	.period = PWM_USEC(PWM_PERIOD_USEC),
-	.flags = PWM_POLARITY_NORMAL
-};
-
-static const struct pwm_dt_spec motor1_forward_spec = {
-	.dev = pwn_dev,
-	.channel = 1,
-	.period = PWM_USEC(PWM_PERIOD_USEC),
-	.flags = PWM_POLARITY_NORMAL
-};
-
-static const struct pwm_dt_spec motor2_forward_spec = {
-	.dev = pwn_dev,
-	.channel = 9,
-	.period = PWM_USEC(PWM_PERIOD_USEC),
-	.flags = PWM_POLARITY_NORMAL
-};
-
-static const struct pwm_dt_spec motor3_forward_spec = {
-	.dev = pwn_dev,
-	.channel = 8,
-	.period = PWM_USEC(PWM_PERIOD_USEC),
-	.flags = PWM_POLARITY_NORMAL
-};
-
-
-static const uint32_t min_pulse = PWM_USEC(0);
-static const uint32_t max_pulse = PWM_USEC(50);
+static const struct pwm_dt_spec motor0_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor0);
+static const struct pwm_dt_spec motor1_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor1);
+static const struct pwm_dt_spec motor2_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor2);
+static const struct pwm_dt_spec motor3_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor3);
 
 enum direction {
 	DOWN,
@@ -69,11 +41,10 @@ static bool check_pwm_devices_ready() {
 	return true;
 }
 
-#define STEP PWM_USEC(5)
 
 int PWM_Start(void)
 {
-	uint32_t pulse_width = min_pulse;
+	uint32_t pulse_width = MIN_PULSE_NS;
 	enum direction dir = UP;
 	int ret;
 
@@ -91,22 +62,22 @@ int PWM_Start(void)
 		}
 
 		if (dir == DOWN) {
-			if (pulse_width <= min_pulse) {
+			if (pulse_width <= MIN_PULSE_NS) {
 				dir = UP;
-				pulse_width = min_pulse;
+				pulse_width = MIN_PULSE_NS;
 			} else {
 				pulse_width -= STEP;
 			}
 		} else {
 			pulse_width += STEP;
 
-			if (pulse_width >= max_pulse) {
+			if (pulse_width >= MAX_PULSE_NS) {
 				dir = DOWN;
-				pulse_width = max_pulse;
+				pulse_width = MAX_PULSE_NS;
 			}
 		}
 
-		k_sleep(K_MSEC(50));
+		k_msleep(50);
 	}
 	return 0;
 }
