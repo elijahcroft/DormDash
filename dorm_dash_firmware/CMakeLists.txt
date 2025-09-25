@@ -7,9 +7,9 @@ set(BOARD rpi_pico)
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(dorm_dash_robot)
 
-target_sources(app PRIVATE 
+target_sources(app PRIVATE
 	src/main.c
 	src/leds.c
-	# src/distance_sensor.c
+	src/distance_sensor.c
 	src/pwm_motor.c
 )
