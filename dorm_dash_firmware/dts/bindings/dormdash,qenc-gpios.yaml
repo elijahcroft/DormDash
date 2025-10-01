@@ -1,0 +1,14 @@
+# Copyright (c) 2024
+# SPDX-License-Identifier: Apache-2.0
+
+description: DormDash Quadrature Encoder Configuration
+
+compatible: "dormdash,qenc-gpios"
+
+include: base.yaml
+
+properties:
+  gpios:
+    type: phandle-array
+    required: true
+    description: GPIO specifier for encoder A and B channels.
