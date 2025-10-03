@@ -26,6 +26,12 @@
                 <&gpio0 7 GPIO_ACTIVE_HIGH>;
     };
 
+    qenc1: qenc1 {
+        compatible = "dormdash,qenc-gpios";
+        gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
+                <&gpio0 9 GPIO_ACTIVE_HIGH>;
+    };
+
 //    qenc1: qenc1 {
 //        gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
 //                <&gpio0 9 GPIO_ACTIVE_HIGH>;
