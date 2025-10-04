@@ -1,0 +1,29 @@
+# Copyright (c) 2024
+# SPDX-License-Identifier: Apache-2.0
+
+description: DormDash multi-channel servo motor PWM configuration
+
+compatible: "dormdash,motor-pwms"
+
+include: base.yaml
+
+properties:
+  pwms:
+    type: phandle-array
+    required: true
+    description: PWM specifiers driving each motor output.
+
+  pwm-names:
+    type: string-array
+    required: true
+    description: Human-readable names that match each entry in pwms.
+
+  min-pulse:
+    type: int
+    required: true
+    description: Minimum pulse width (nanoseconds) allowed for the motors.
+
+  max-pulse:
+    type: int
+    required: true
+    description: Maximum pulse width (nanoseconds) allowed for the motors.

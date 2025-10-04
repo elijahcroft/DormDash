@@ -17,7 +17,15 @@ static struct k_thread thread_data;
 
 LOG_MODULE_REGISTER(distance_sensor);
 
-#define LIDAR_NODE DT_PATH(soc, i2c_40044000, lidar_29)
+#define TRIAL_N 0
+
+#if TRIAL_N == 0
+    #define LIDAR_NODE DT_PATH(soc, i2c_40044000, lidar_29)
+#elif TRIAL_N == 1
+    #define LIDAR_NODE DT_NODELABEL(lidar0)
+#else
+    #define LIDAR_NODE DT_CHILD(DT_NODELABEL(i2c0), lidar_29)
+#endif
 
 static const struct device *const dev = DEVICE_DT_GET(LIDAR_NODE);
 
@@ -27,13 +35,13 @@ static void lidar_thread_entry(void* a, void* b, void* c)
     ARG_UNUSED(b);
     ARG_UNUSED(c);
 
-    int ret;
+    //int ret;
     struct sensor_value value;
 
 	while (true) {
 
 		int ret = sensor_sample_fetch(dev);
-        
+
 		if (ret) {
 			LOG_INF("sensor_sample_fetch failed ret %d\n", ret);
 			return;
@@ -72,8 +80,8 @@ static void lidar_thread_entry(void* a, void* b, void* c)
 
 int LIDAR_Start(void)
 {
-	struct sensor_value value;
-	int ret;
+	//struct sensor_value value;
+	//int ret;
 
 	if (!device_is_ready(dev)) {
 		LOG_ERR("LiDAR not ready!");
