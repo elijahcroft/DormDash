@@ -6,6 +6,8 @@
 #include "leds.h"
 #include "distance_sensor.h"
 #include "pwm_motor.h"
+#include "quadrature_decoder.h"
+
 
 LOG_MODULE_REGISTER(main);
 
@@ -19,7 +21,9 @@ int main(void)
 	// 	LOG_ERR("Unable to initialize LiDAR sensors!");
 	// }
 
-	PWM_Start();
+	// PWM_Start();
+
+	QuadratureDecoder_Start();
 
 	while (true) {
 		// LOG_INF("Hello World!");
