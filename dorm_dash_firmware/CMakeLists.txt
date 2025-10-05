@@ -12,4 +12,5 @@ target_sources(app PRIVATE
 	src/leds.c
 	src/distance_sensor.c
 	src/pwm_motor.c
+	src/quadrature_decoder.c
 )
