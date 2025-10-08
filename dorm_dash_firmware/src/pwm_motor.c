@@ -1,83 +1,124 @@
 #include "pwm_motor.h"
 
+#include <stdlib.h>
+
 LOG_MODULE_REGISTER(pwm_motor);
 
 #define PWM_NODE DT_NODELABEL(motor_pwms)
 #define MIN_PULSE_NS DT_PROP(PWM_NODE, min_pulse)
 #define MAX_PULSE_NS DT_PROP(PWM_NODE, max_pulse)
-#define STEP PWM_USEC(5)
 
-static const struct pwm_dt_spec motor0_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor0);
-static const struct pwm_dt_spec motor1_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor1);
-static const struct pwm_dt_spec motor2_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor2);
-static const struct pwm_dt_spec motor3_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor3);
+#define MOTOR_COUNT 2
 
-enum direction {
-	DOWN,
-	UP,
+struct pwm_motor
+{
+	const struct pwm_dt_spec motor_forward_spec;
+	const struct pwm_dt_spec motor_backward_spec;
+	const int max_duty_cycle_ns;
+
+	int current_duty_cycle;
+	int current_direction;
+
+	char* name;
+};
+
+struct pwm_motor motors[MOTOR_COUNT] = {
+	{
+		.name = "motor_0",
+		.motor_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor0_forward),
+		.motor_backward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor0_backward),
+		.max_duty_cycle_ns = MAX_PULSE_NS
+	},
+	{
+		.name = "motor_1",
+		.motor_forward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor1_forward),
+		.motor_backward_spec = PWM_DT_SPEC_GET_BY_NAME(PWM_NODE, motor1_backward),
+		.max_duty_cycle_ns = MAX_PULSE_NS
+	},
 };
 
 static bool check_pwm_devices_ready() {
-	if (!pwm_is_ready_dt(&motor0_forward_spec)) {
-		LOG_ERR("0PWM device not ready!\n");
-		return false;
-	}
 
-	if (!pwm_is_ready_dt(&motor1_forward_spec)) {
-		LOG_ERR("1PWM device not ready!\n");
-		return false;
-	}
-
-	if (!pwm_is_ready_dt(&motor2_forward_spec)) {
-		LOG_ERR("2PWM device not ready!\n");
-		return false;
-	}
-
-	if (!pwm_is_ready_dt(&motor3_forward_spec)) {
-		LOG_ERR("3PWM device not ready!\n");
-		return false;
+	for (int i = 0; i < MOTOR_COUNT; i++)
+	{
+		if (!pwm_is_ready_dt(&motors[i].motor_forward_spec)
+			|| !pwm_is_ready_dt(&motors[i].motor_backward_spec))
+		{
+			LOG_ERR("PWM device %s not ready!", motors[i].name);
+			return false;
+		}
 	}
 
 	return true;
 }
 
-
-int PWM_Start(void)
+int PwmMotor_SetDutyCycle(enum MotorType type, int dutyCycle)
 {
-	uint32_t pulse_width = MIN_PULSE_NS;
-	enum direction dir = UP;
 	int ret;
+	int pulse_width_ns = 0;
+	struct pwm_motor* motor = &motors[type];
 
-	if (check_pwm_devices_ready() == false) {
-		LOG_ERR("One or more PWM devices not ready!\n");
-		return -1;
-	}
+	pulse_width_ns = (abs(dutyCycle) / 100.0f) * motor->max_duty_cycle_ns;
 
-	while (true) {
-
-		ret = pwm_set_pulse_dt(&motor3_forward_spec, pulse_width);
+	// TODO - do we need delay between dir switches to prevent short?????
+	if (dutyCycle > 0)
+	{
+		ret = pwm_set_pulse_dt(&motor->motor_backward_spec, 0);
 		if (ret < 0) {
 			LOG_ERR("Error %d: failed to set pulse width\n", ret);
 			return -1;
 		}
 
-		if (dir == DOWN) {
-			if (pulse_width <= MIN_PULSE_NS) {
-				dir = UP;
-				pulse_width = MIN_PULSE_NS;
-			} else {
-				pulse_width -= STEP;
-			}
-		} else {
-			pulse_width += STEP;
-
-			if (pulse_width >= MAX_PULSE_NS) {
-				dir = DOWN;
-				pulse_width = MAX_PULSE_NS;
-			}
+		ret = pwm_set_pulse_dt(&motor->motor_forward_spec, pulse_width_ns);
+		if (ret < 0) {
+			LOG_ERR("Error %d: failed to set pulse width\n", ret);
+			return -1;
 		}
 
-		k_msleep(50);
+		motor->current_direction = 1;
 	}
+	else if (dutyCycle < 0)
+	{
+		ret = pwm_set_pulse_dt(&motor->motor_forward_spec, 0);
+		if (ret < 0) {
+			LOG_ERR("Error %d: failed to set pulse width\n", ret);
+			return -1;
+		}
+
+		ret = pwm_set_pulse_dt(&motor->motor_backward_spec, pulse_width_ns);
+		if (ret < 0) {
+			LOG_ERR("Error %d: failed to set pulse width\n", ret);
+			return -1;
+		}
+
+		motor->current_direction = -1;
+	}
+	else
+	{
+		ret = pwm_set_pulse_dt(&motor->motor_forward_spec, 0);
+		if (ret < 0) {
+			LOG_ERR("Error %d: failed to set pulse width\n", ret);
+			return -1;
+		}
+
+		ret = pwm_set_pulse_dt(&motor->motor_backward_spec, 0);
+		if (ret < 0) {
+			LOG_ERR("Error %d: failed to set pulse width\n", ret);
+			return -1;
+		}
+
+		motor->current_direction = 0;
+	}
+
+	return 0;
+}
+
+int PWM_Start(void)
+{
+	if (check_pwm_devices_ready() == false) {
+		LOG_ERR("One or more PWM devices not ready!\n");
+		return -1;
+	}
+
 	return 0;
 }

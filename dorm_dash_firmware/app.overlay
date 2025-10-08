@@ -17,19 +17,21 @@
                <&pwm 8 PWM_USEC(50) PWM_POLARITY_NORMAL>,
                <&pwm 0 PWM_USEC(50) PWM_POLARITY_NORMAL>;
 
-	    pwm-names = "motor0", "motor1", "motor2", "motor3";
+	    pwm-names = "motor0_forward", "motor0_backward", "motor1_forward", "motor1_backward";
     };
 
     qenc0: qenc0 {
         compatible = "dormdash,qenc-gpios";
         gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>,
                 <&gpio0 7 GPIO_ACTIVE_HIGH>;
+        status = "okay";
     };
 
     qenc1: qenc1 {
         compatible = "dormdash,qenc-gpios";
         gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
                 <&gpio0 9 GPIO_ACTIVE_HIGH>;
+        status = "okay";
     };
 
 //    qenc1: qenc1 {

@@ -21,7 +21,7 @@ int main(void)
 	// 	LOG_ERR("Unable to initialize LiDAR sensors!");
 	// }
 
-	// PWM_Start();
+	PWM_Start();
 
 	QuadratureDecoder_Start();
 
