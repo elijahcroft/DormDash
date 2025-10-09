@@ -1,6 +1,6 @@
 // FROM: https://github.com/pms67/PID
 
-#include "PID.h"
+#include "pid.h"
 
 void PIDController_Init(PIDController *pid) {
 

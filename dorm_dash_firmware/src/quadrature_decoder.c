@@ -52,7 +52,7 @@ struct quadrature_encoder quad_encoders[QUADRATURE_ENC_COUNT] = {
 
 };
 
-static long get_enc_pos(enum QuadEncoderType type)
+long QuadratureEncoder_GetPos(enum QuadEncoderType type)
 {
     return atomic_get(&quad_encoders[type].position);
 }
@@ -172,12 +172,17 @@ int QuadratureDecoder_Start(void)
         return -1;
     }
 
+	return 0;
+
     while (true)
     {
-        long left_pos = get_enc_pos(Q_ENCODER_LEFT_MOTOR);
-        long right_pos = get_enc_pos(Q_ENCODER_RIGHT_MOTOR);
+        long left_pos = QuadratureEncoder_GetPos(Q_ENCODER_LEFT_MOTOR);
+        long right_pos = QuadratureEncoder_GetPos(Q_ENCODER_RIGHT_MOTOR);
 
-        LOG_INF("left_motor: %ld | right_motor: %ld", left_pos, right_pos);
+		//LOG_INF("callback0: %p", &quad_encoders[0].interrupt_callback);
+		//LOG_INF("callback1: %p", &quad_encoders[1].interrupt_callback);
+
+        LOG_INF("left_motor__: %ld | right_motor: %ld", left_pos, right_pos);
         k_sleep(K_MSEC(10));
     }
 

@@ -7,6 +7,7 @@
 #include "distance_sensor.h"
 #include "pwm_motor.h"
 #include "quadrature_decoder.h"
+#include "motor_control.h"
 
 
 LOG_MODULE_REGISTER(main);
@@ -22,10 +23,20 @@ int main(void)
 	// }
 
 	PWM_Start();
-
+	//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, 50);
+	//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, -50);
+	//PwmMotor_SetDutyCycle(MOTOR_TYPE_RIGHT, 50);
 	QuadratureDecoder_Start();
 
+	MotorControl_Start();
+
 	while (true) {
+		//k_sleep(K_MSEC(500));
+		//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, 0);
+		//k_sleep(K_MSEC(500));
+		//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, -50);
+		//k_sleep(K_MSEC(500));
+
 		// LOG_INF("Hello World!");
 		k_sleep(K_SECONDS(2));
 	}

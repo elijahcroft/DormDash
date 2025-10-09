@@ -1,4 +1,3 @@
-// RPI pico pinctrl bindings: zephyr/include/zephyr/dt-bindings/pinctrl/rpi-pico-pinctrl-common.h
 
 / {
     chosen {
@@ -6,16 +5,28 @@
         zephyr,shell-uart = &cdc_acm_uart0;
     };
 
+//    pin-controller {
+//        my_pwm_ch4b: pwm_ch4b_all4 {
+//            group1 {
+//                /* numeric pinmux values taken from your compiled zephyr.dts */
+//                pinmux = <PWM_1A_P18>, <PWM_1B_P19>;
+//            };
+//
+//            group2 {
+//                pinmux = <PWM_7A_P14>, <PWM_7B_P15>;
+//            };
+//        };
+//    };
+
     motor_pwms: motor_pwms {
         compatible = "dormdash,motor-pwms";
 
-        min-pulse = <PWM_USEC(700)>;
-        max-pulse = <PWM_USEC(2500)>;
+        max-pulse = <PWM_USEC(50)>;
 
-        pwms = <&pwm 2 PWM_USEC(50) PWM_POLARITY_NORMAL>,
-               <&pwm 9 PWM_USEC(50) PWM_POLARITY_NORMAL>,
-               <&pwm 8 PWM_USEC(50) PWM_POLARITY_NORMAL>,
-               <&pwm 0 PWM_USEC(50) PWM_POLARITY_NORMAL>;
+        pwms = <&pwm 14 PWM_USEC(50) PWM_POLARITY_NORMAL>,
+               <&pwm 15 PWM_USEC(50) PWM_POLARITY_NORMAL>,
+               <&pwm 12 PWM_USEC(50) PWM_POLARITY_NORMAL>,
+               <&pwm 13 PWM_USEC(50) PWM_POLARITY_NORMAL>;
 
 	    pwm-names = "motor0_forward", "motor0_backward", "motor1_forward", "motor1_backward";
     };
@@ -74,10 +85,23 @@
 // Params: zephyr/dts/bindings/pwm/raspberrypi,pico-pwm.yaml
 &pwm {
     status = "okay";
+//    pinctrl-0 = <&my_pwm_ch4b>;
+//    pinctrl-names = "default";
 };
 
+// RPI pico pinctrl bindings: zephyr/include/zephyr/dt-bindings/pinctrl/rpi-pico-pinctrl-common.h
 &pwm_ch4b_default {
     group1 {
-        pinmux = <PWM_4B_P25>, <PWM_4B_P9>, <PWM_4A_P8>, <PWM_0A_P16>, <PWM_0B_P17>, <PWM_0A_P0>, <PWM_0B_P1>;
+        // For some reason cannot access PMW on gpio greater than 15.
+        // 8, slices, 16 channels???
+        pinmux = <PWM_6A_P12>, <PWM_6B_P13>, <PWM_7A_P14>, <PWM_7B_P15>;
     };
+
+//    pwm_slice7: pwm_slice7_group {
+//        pinmux = <PWM_7A_P14>, <PWM_7B_P15>;
+//    };
+//
+//    pwm_slice1: pwm_slice1_group {
+//        pinmux = <PWM_1A_P18>, <PWM_1B_P19>;
+//    };
 };

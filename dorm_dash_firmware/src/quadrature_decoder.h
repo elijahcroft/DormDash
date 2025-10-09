@@ -7,3 +7,4 @@ enum QuadEncoderType
 };
 
 int QuadratureDecoder_Start(void);
+long QuadratureEncoder_GetPos(enum QuadEncoderType type);
