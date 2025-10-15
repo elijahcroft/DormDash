@@ -9,6 +9,8 @@
 #include "quadrature_decoder.h"
 #include "motor_control.h"
 
+#include "uart_circ_dma_ex.h"
+
 
 LOG_MODULE_REGISTER(main);
 
@@ -28,6 +30,8 @@ int main(void)
 	//QuadratureDecoder_Start();
 
 	//MotorControl_Start();
+
+	UART_Start();
 
 	while (true) {
 		//k_sleep(K_MSEC(500));
