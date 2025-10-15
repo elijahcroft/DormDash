@@ -5,19 +5,6 @@
         zephyr,shell-uart = &cdc_acm_uart0;
     };
 
-//    pin-controller {
-//        my_pwm_ch4b: pwm_ch4b_all4 {
-//            group1 {
-//                /* numeric pinmux values taken from your compiled zephyr.dts */
-//                pinmux = <PWM_1A_P18>, <PWM_1B_P19>;
-//            };
-//
-//            group2 {
-//                pinmux = <PWM_7A_P14>, <PWM_7B_P15>;
-//            };
-//        };
-//    };
-
     motor_pwms: motor_pwms {
         compatible = "dormdash,motor-pwms";
 
@@ -33,22 +20,17 @@
 
     qenc0: qenc0 {
         compatible = "dormdash,qenc-gpios";
-        gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>,
-                <&gpio0 7 GPIO_ACTIVE_HIGH>;
-        status = "okay";
-    };
-
-    qenc1: qenc1 {
-        compatible = "dormdash,qenc-gpios";
         gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
                 <&gpio0 9 GPIO_ACTIVE_HIGH>;
         status = "okay";
     };
 
-//    qenc1: qenc1 {
-//        gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
-//                <&gpio0 9 GPIO_ACTIVE_HIGH>;
-//    };
+    qenc1: qenc1 {
+        compatible = "dormdash,qenc-gpios";
+        gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>,
+                <&gpio0 11 GPIO_ACTIVE_HIGH>;
+        status = "okay";
+    };
 
 };
 
@@ -58,25 +40,60 @@
     };
 };
 
-//&pico_header {
-//
-//  n1: quadrature_enc0 {
-//          gpio-hog;
-//          gpios = < 6 GPIO_ACTIVE_HIGH>,
-//                  <7 GPIO_ACTIVE_HIGH>;
-//          output-low;
-//  };
-//
-//};
+&uart0 {
+    current-speed = <115200>;
+    status = "okay";
+};
+
 
 // I2C bus
 &i2c0 {
     status = "okay";
 
-    lidar0: lidar@29 {
+    // LIDAR - declarations ---------------------------
+    // Notes: Each lidar module has default address 0x29.
+    // The x-shut gpio is set to low in order to set the address of each lidar module
+    // one at a time to the overlay node's specified address. Then gpio is rises after setting
+    // address.
+
+    lidar0: lidar@45 {
         compatible = "st,vl53l0x";
-        reg = <0x29>; // I2C Address
+        reg = <0x45>; // I2C Address
         status = "okay";
+
+        xshut-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
+    };
+
+    lidar1: lidar@46 {
+        compatible = "st,vl53l0x";
+        reg = <0x46>; // I2C Address
+        status = "okay";
+
+        xshut-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
+    };
+
+    lidar2: lidar@47 {
+        compatible = "st,vl53l0x";
+        reg = <0x47>; // I2C Address
+        status = "okay";
+
+        xshut-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
+    };
+
+    lidar3: lidar@48 {
+        compatible = "st,vl53l0x";
+        reg = <0x48>; // I2C Address
+        status = "okay";
+
+        xshut-gpios = <&gpio0 19 GPIO_ACTIVE_LOW>;
+    };
+
+    lidar4: lidar@49 {
+        compatible = "st,vl53l0x";
+        reg = <0x49>; // I2C Address
+        status = "disabled";
+
+        xshut-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
     };
 
 };
@@ -85,8 +102,6 @@
 // Params: zephyr/dts/bindings/pwm/raspberrypi,pico-pwm.yaml
 &pwm {
     status = "okay";
-//    pinctrl-0 = <&my_pwm_ch4b>;
-//    pinctrl-names = "default";
 };
 
 // RPI pico pinctrl bindings: zephyr/include/zephyr/dt-bindings/pinctrl/rpi-pico-pinctrl-common.h
@@ -97,11 +112,4 @@
         pinmux = <PWM_6A_P12>, <PWM_6B_P13>, <PWM_7A_P14>, <PWM_7B_P15>;
     };
 
-//    pwm_slice7: pwm_slice7_group {
-//        pinmux = <PWM_7A_P14>, <PWM_7B_P15>;
-//    };
-//
-//    pwm_slice1: pwm_slice1_group {
-//        pinmux = <PWM_1A_P18>, <PWM_1B_P19>;
-//    };
 };

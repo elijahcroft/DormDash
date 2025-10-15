@@ -18,17 +18,16 @@ int main(void)
 		LOG_ERR("Unable to initialize LEDS!");
 	}
 
+	LIDAR_Start();
+
 	// if (LIDAR_Start() == -1) {
 	// 	LOG_ERR("Unable to initialize LiDAR sensors!");
 	// }
 
-	PWM_Start();
-	//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, 50);
-	//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, -50);
-	//PwmMotor_SetDutyCycle(MOTOR_TYPE_RIGHT, 50);
-	QuadratureDecoder_Start();
+	//PWM_Start();
+	//QuadratureDecoder_Start();
 
-	MotorControl_Start();
+	//MotorControl_Start();
 
 	while (true) {
 		//k_sleep(K_MSEC(500));
