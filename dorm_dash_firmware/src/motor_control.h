@@ -3,8 +3,9 @@
 enum MotorControllerType
 {
     CONTROLLER_LEFT = 0,
-    CONTROLLER_RIGH1T = 1
+    CONTROLLER_RIGHT = 1
 };
 
 
 int MotorControl_Start();
+void MotorControl_SetVelocity(enum MotorControllerType type, float velocity_step_per_sec);

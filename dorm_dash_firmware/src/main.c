@@ -20,27 +20,46 @@ int main(void)
 		LOG_ERR("Unable to initialize LEDS!");
 	}
 
-	LIDAR_Start();
+	//LIDAR_Start();
 
 	// if (LIDAR_Start() == -1) {
 	// 	LOG_ERR("Unable to initialize LiDAR sensors!");
 	// }
 
-	//PWM_Start();
-	//QuadratureDecoder_Start();
+	PWM_Start();
+	QuadratureDecoder_Start();
 
-	//MotorControl_Start();
+	MotorControl_Start();
 
-	UART_Start();
+	//UART_Start();
 
 	while (true) {
-		//k_sleep(K_MSEC(500));
-		//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, 0);
-		//k_sleep(K_MSEC(500));
-		//PwmMotor_SetDutyCycle(MOTOR_TYPE_LEFT, -50);
-		//k_sleep(K_MSEC(500));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, 0);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, 0);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, 100);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, 100);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, 300);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, 300);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, 100);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, 100);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, 0);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, 0);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, -100);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, -100);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, -300);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, -300);
+		k_sleep(K_MSEC(2000));
+		MotorControl_SetVelocity(CONTROLLER_LEFT, -100);
+		MotorControl_SetVelocity(CONTROLLER_RIGHT, -100);
+		k_sleep(K_MSEC(2000));
 
-		// LOG_INF("Hello World!");
-		k_sleep(K_SECONDS(2));
+		//LOG_INF("Hello World!");
+		//k_sleep(K_SECONDS(2));
 	}
 }

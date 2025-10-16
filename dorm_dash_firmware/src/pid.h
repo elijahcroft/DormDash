@@ -21,9 +21,6 @@ typedef struct {
 	float limMinInt;
 	float limMaxInt;
 
-	/* Sample time (in seconds) */
-	float T;
-
 	/* Controller "memory" */
 	float integrator;
 	float prevError;			/* Required for integrator */
@@ -36,6 +33,6 @@ typedef struct {
 } PIDController;
 
 void  PIDController_Init(PIDController *pid);
-float PIDController_Update(PIDController *pid, float setpoint, float measurement);
+float PIDController_Update(PIDController *pid, float setpoint, float measurement, float delta_time);
 
 #endif

@@ -1,6 +1,8 @@
 #include "pwm_motor.h"
 
 #include <stdlib.h>
+#include <math.h>
+
 
 LOG_MODULE_REGISTER(pwm_motor);
 
@@ -51,13 +53,13 @@ static bool check_pwm_devices_ready() {
 	return true;
 }
 
-int PwmMotor_SetDutyCycle(enum MotorType type, int dutyCycle)
+int PwmMotor_SetDutyCycle(enum MotorType type, float dutyCycle)
 {
 	int ret;
 	int pulse_width_ns = 0;
 	struct pwm_motor* motor = &motors[type];
 
-	pulse_width_ns = (abs(dutyCycle) / 100.0f) * motor->max_pulse_nsec;
+	pulse_width_ns = (int)((fabsf(dutyCycle) / 100.0f) * motor->max_pulse_nsec);
 
 	// TODO - do we need delay between dir switches to prevent short?????
 	if (dutyCycle > 0)

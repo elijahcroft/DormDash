@@ -13,4 +13,4 @@ enum MotorType
 };
 
 int PWM_Start(void);
-int PwmMotor_SetDutyCycle(enum MotorType type, int dutyCycle);
+int PwmMotor_SetDutyCycle(enum MotorType type, float dutyCycle);
