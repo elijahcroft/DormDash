@@ -15,5 +15,5 @@ target_sources(app PRIVATE
 	src/quadrature_decoder.c
 	src/motor_control.c
 	src/pid.c
-	src/uart_circ_dma_ex.c
+	src/uart_echo.c
 )
