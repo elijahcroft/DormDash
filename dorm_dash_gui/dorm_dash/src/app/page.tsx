@@ -3,13 +3,11 @@ import Navbar from "./components/Navbar";
 import Control from "./components/Control";
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Navbar/>
-      <div className="flex flex-row-reverse bg-[#44444E] p-8">
-        <div>hi</div>
-         <Control/>
+      <div className="flex justify-center items-start bg-[#44444E] p-8 min-h-[calc(100vh-80px)]">
+        <Control/>
       </div>
-     
     </div>
   );
 }
