@@ -1,0 +1,805 @@
+/dts-v1/;
+
+/* node '/' defined in zephyr/dts/common/skeleton.dtsi:9 */
+/ {
+	#address-cells = < 0x1 >; /* in zephyr/dts/common/skeleton.dtsi:10 */
+	#size-cells = < 0x1 >;    /* in zephyr/dts/common/skeleton.dtsi:11 */
+
+	/* node '/chosen' defined in zephyr/dts/common/skeleton.dtsi:12 */
+	chosen {
+		zephyr,sram = &sram0;                    /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:18 */
+		zephyr,flash = &flash0;                  /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:19 */
+		zephyr,flash-controller = &ssi;          /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:20 */
+		zephyr,code-partition = &code_partition; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:23 */
+		zephyr,console = &cdc_acm_uart0;         /* in DormDash/dorm_dash_firmware/app.overlay:4 */
+		zephyr,shell-uart = &cdc_acm_uart0;      /* in DormDash/dorm_dash_firmware/app.overlay:5 */
+	};
+
+	/* node '/aliases' defined in zephyr/dts/common/skeleton.dtsi:13 */
+	aliases {
+		die-temp0 = &die_temp; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:28 */
+		rtc = &rtc;            /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:27 */
+		watchdog0 = &wdt0;     /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:28 */
+		led0 = &led0;          /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:27 */
+		pwm-led0 = &pwm_led0;  /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:28 */
+	};
+
+	/* node '/soc' defined in zephyr/dts/arm/armv6-m.dtsi:6 */
+	soc {
+		#address-cells = < 0x1 >;          /* in zephyr/dts/arm/armv6-m.dtsi:7 */
+		#size-cells = < 0x1 >;             /* in zephyr/dts/arm/armv6-m.dtsi:8 */
+		interrupt-parent = < &nvic >;      /* in zephyr/dts/arm/armv6-m.dtsi:10 */
+		ranges;                            /* in zephyr/dts/arm/armv6-m.dtsi:11 */
+		compatible = "raspberrypi,rp2040",
+		             "simple-bus";         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:190 */
+
+		/* node '/soc/interrupt-controller@e000e100' defined in zephyr/dts/arm/armv6-m.dtsi:13 */
+		nvic: interrupt-controller@e000e100 {
+			#address-cells = < 0x1 >;            /* in zephyr/dts/arm/armv6-m.dtsi:14 */
+			compatible = "arm,v6m-nvic";         /* in zephyr/dts/arm/armv6-m.dtsi:15 */
+			reg = < 0xe000e100 0xc00 >;          /* in zephyr/dts/arm/armv6-m.dtsi:16 */
+			interrupt-controller;                /* in zephyr/dts/arm/armv6-m.dtsi:17 */
+			#interrupt-cells = < 0x2 >;          /* in zephyr/dts/arm/armv6-m.dtsi:18 */
+			arm,num-irq-priority-bits = < 0x2 >; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:448 */
+			phandle = < 0x1 >;                   /* in zephyr/dts/arm/armv6-m.dtsi:10 */
+		};
+
+		/* node '/soc/timer@e000e010' defined in zephyr/dts/arm/armv6-m.dtsi:21 */
+		systick: timer@e000e010 {
+			compatible = "arm,armv6m-systick"; /* in zephyr/dts/arm/armv6-m.dtsi:22 */
+			reg = < 0xe000e010 0x10 >;         /* in zephyr/dts/arm/armv6-m.dtsi:23 */
+		};
+
+		/* node '/soc/memory@20000000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:192 */
+		sram0: memory@20000000 {
+			compatible = "mmio-sram";     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:193 */
+			reg = < 0x20000000 0x42000 >; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:194 */
+		};
+
+		/* node '/soc/flash-controller@18000000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:197 */
+		ssi: flash-controller@18000000 {
+			compatible = "raspberrypi,pico-flash-controller"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:198 */
+			reg = < 0x18000000 0xfc >;                        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:199 */
+			#address-cells = < 0x1 >;                         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:201 */
+			#size-cells = < 0x1 >;                            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:202 */
+
+			/* node '/soc/flash-controller@18000000/flash@10000000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:204 */
+			flash0: flash@10000000 {
+				compatible = "soc-nv-flash";   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:205 */
+				write-block-size = < 0x1 >;    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:206 */
+				erase-block-size = < 0x1000 >; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:207 */
+				reg = < 0x10000000 0x200000 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:66 */
+
+				/* node '/soc/flash-controller@18000000/flash@10000000/partitions' defined in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:68 */
+				partitions {
+					compatible = "fixed-partitions"; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:69 */
+					#address-cells = < 0x1 >;        /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:70 */
+					#size-cells = < 0x1 >;           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:71 */
+
+					/* node '/soc/flash-controller@18000000/flash@10000000/partitions/partition@0' defined in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:74 */
+					second_stage_bootloader: partition@0 {
+						label = "second_stage_bootloader"; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:75 */
+						reg = < 0x0 0x100 >;               /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:76 */
+						read-only;                         /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:77 */
+					};
+
+					/* node '/soc/flash-controller@18000000/flash@10000000/partitions/partition@100' defined in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:84 */
+					code_partition: partition@100 {
+						label = "code-partition"; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:85 */
+						reg = < 0x100 0x1fff00 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:86 */
+						read-only;                /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:87 */
+					};
+				};
+			};
+		};
+
+		/* node '/soc/reset-controller@4000c000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:211 */
+		reset: reset-controller@4000c000 {
+			compatible = "raspberrypi,pico-reset"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:212 */
+			reg = < 0x4000c000 0x1000 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:213 */
+			reg-width = < 0x4 >;                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:214 */
+			active-low = < 0x0 >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:215 */
+			#reset-cells = < 0x1 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:216 */
+			phandle = < 0x15 >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:268 */
+		};
+
+		/* node '/soc/clock-controller@40008000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:219 */
+		clocks: clock-controller@40008000 {
+			compatible = "raspberrypi,pico-clock-controller";                                          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:220 */
+			reg = < 0x40008000 0x1000 0x40024000 0x1000 0x40028000 0x1000 0x4002c000 0x1000 0x40060000
+			        0x1000 >;                                                                          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:221 */
+			reg-names = "clocks",
+			            "xosc",
+			            "pll_sys",
+			            "pll_usb",
+			            "rosc";                                                                        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:226 */
+			#clock-cells = < 0x1 >;                                                                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:227 */
+			status = "okay";                                                                           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:228 */
+			clocks = < &clk_gpout0 >,
+			         < &clk_gpout1 >,
+			         < &clk_gpout2 >,
+			         < &clk_gpout3 >,
+			         < &clk_ref >,
+			         < &clk_sys >,
+			         < &clk_peri >,
+			         < &clk_usb >,
+			         < &clk_adc >,
+			         < &clk_rtc >,
+			         < &pll_sys >,
+			         < &pll_usb >,
+			         < &xosc >,
+			         < &rosc >,
+			         < &rosc_ph >,
+			         < &gpin0 >,
+			         < &gpin1 >;                                                                       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+			clock-names = "clk_gpout0",
+			              "clk_gpout1",
+			              "clk_gpout2",
+			              "clk_gpout3",
+			              "clk_ref",
+			              "clk_sys",
+			              "clk_peri",
+			              "clk_usb",
+			              "clk_adc",
+			              "clk_rtc",
+			              "pll_sys",
+			              "pll_usb",
+			              "xosc",
+			              "rosc",
+			              "rosc_ph",
+			              "gpin0",
+			              "gpin1";                                                                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:234 */
+			phandle = < 0x14 >;                                                                        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:267 */
+		};
+
+		/* node '/soc/gpio@40014000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:241 */
+		gpio0_map: gpio@40014000 {
+			compatible = "raspberrypi,pico-gpio";      /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:242 */
+			reg = < 0x40014000 0x1000 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:243 */
+			interrupts = < 0xd 0x3 >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:244 */
+			gpio-map-mask = < 0xffffffe0 0xffffffc0 >; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:246 */
+			gpio-map-pass-thru = < 0x1f 0x3f >;        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:247 */
+			gpio-map = < 0x0 0x0 &gpio0 0x0 0x0 >;     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:248 */
+			#gpio-cells = < 0x2 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:250 */
+			#address-cells = < 0x1 >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:251 */
+			#size-cells = < 0x0 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:252 */
+
+			/* node '/soc/gpio@40014000/gpio-port@0' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:254 */
+			gpio0: gpio-port@0 {
+				compatible = "raspberrypi,pico-gpio-port"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:255 */
+				reg = < 0x0 >;                             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:256 */
+				gpio-controller;                           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:258 */
+				#gpio-cells = < 0x2 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:259 */
+				ngpios = < 0x1e >;                         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:260 */
+				status = "okay";                           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:100 */
+				phandle = < 0x13 >;                        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:248 */
+			};
+		};
+
+		/* node '/soc/uart@40034000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:264 */
+		uart0: pico_serial: uart@40034000 {
+			compatible = "raspberrypi,pico-uart",
+			             "arm,pl011";             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:265 */
+			reg = < 0x40034000 0x1000 >;          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:266 */
+			clocks = < &clocks 0x6 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:267 */
+			resets = < &reset 0x16 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:268 */
+			interrupts = < 0x14 0x3 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:269 */
+			interrupt-names = "uart0";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:270 */
+			current-speed = < 0x1c200 >;          /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:93 */
+			status = "okay";                      /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:94 */
+			pinctrl-0 = < &uart0_default >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:95 */
+			pinctrl-names = "default";            /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:96 */
+		};
+
+		/* node '/soc/uart@40038000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:274 */
+		uart1: uart@40038000 {
+			compatible = "raspberrypi,pico-uart",
+			             "arm,pl011";             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:275 */
+			reg = < 0x40038000 0x1000 >;          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:276 */
+			clocks = < &clocks 0x6 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:277 */
+			resets = < &reset 0x17 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:278 */
+			interrupts = < 0x15 0x3 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:279 */
+			interrupt-names = "uart1";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:280 */
+			status = "disabled";                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:281 */
+		};
+
+		/* node '/soc/spi@4003c000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:284 */
+		spi0: pico_spi: spi@4003c000 {
+			compatible = "raspberrypi,pico-spi",
+			             "arm,pl022";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:285 */
+			#address-cells = < 0x1 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:286 */
+			#size-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:287 */
+			reg = < 0x4003c000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:288 */
+			clocks = < &clocks 0x6 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:289 */
+			resets = < &reset 0x10 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:290 */
+			interrupts = < 0x12 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:291 */
+			interrupt-names = "spi0";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:292 */
+			clock-frequency = < 0x7a1200 >;      /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:118 */
+			status = "okay";                     /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:119 */
+			pinctrl-0 = < &spi0_default >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:120 */
+			pinctrl-names = "default";           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:121 */
+		};
+
+		/* node '/soc/spi@40040000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:296 */
+		spi1: spi@40040000 {
+			compatible = "raspberrypi,pico-spi",
+			             "arm,pl022";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:297 */
+			#address-cells = < 0x1 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:298 */
+			#size-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:299 */
+			reg = < 0x40040000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:300 */
+			resets = < &reset 0x11 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:301 */
+			clocks = < &clocks 0x6 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:302 */
+			interrupts = < 0x13 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:303 */
+			interrupt-names = "spi1";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:304 */
+			status = "disabled";                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:305 */
+		};
+
+		/* node '/soc/adc@4004c000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:308 */
+		adc: adc@4004c000 {
+			compatible = "raspberrypi,pico-adc"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:309 */
+			reg = < 0x4004c000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:310 */
+			resets = < &reset 0x0 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:311 */
+			clocks = < &clocks 0x8 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:312 */
+			interrupts = < 0x16 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:313 */
+			interrupt-names = "adc0";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:314 */
+			#io-channel-cells = < 0x1 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:316 */
+			status = "okay";                     /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:138 */
+			pinctrl-0 = < &adc_default >;        /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:139 */
+			pinctrl-names = "default";           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:140 */
+			phandle = < 0x1c >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:442 */
+		};
+
+		/* node '/soc/i2c@40044000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:319 */
+		i2c0: pico_i2c0: i2c@40044000 {
+			compatible = "raspberrypi,pico-i2c",
+			             "snps,designware-i2c";  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:320 */
+			#address-cells = < 0x1 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:321 */
+			#size-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:322 */
+			reg = < 0x40044000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:323 */
+			resets = < &reset 0x3 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:324 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:325 */
+			interrupts = < 0x17 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:326 */
+			interrupt-names = "i2c0";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:327 */
+			clock-frequency = < 0x186a0 >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:104 */
+			pinctrl-0 = < &i2c0_default >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:106 */
+			pinctrl-names = "default";           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:107 */
+			status = "okay";                     /* in DormDash/dorm_dash_firmware/app.overlay:61 */
+
+			/* node '/soc/i2c@40044000/lidar@29' defined in DormDash/dorm_dash_firmware/app.overlay:63 */
+			lidar0: lidar@29 {
+				compatible = "st,vl53l0x"; /* in DormDash/dorm_dash_firmware/app.overlay:64 */
+				reg = < 0x29 >;            /* in DormDash/dorm_dash_firmware/app.overlay:65 */
+				status = "okay";           /* in DormDash/dorm_dash_firmware/app.overlay:66 */
+			};
+		};
+
+		/* node '/soc/i2c@40048000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:331 */
+		i2c1: pico_i2c1: i2c@40048000 {
+			compatible = "raspberrypi,pico-i2c",
+			             "snps,designware-i2c";  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:332 */
+			#address-cells = < 0x1 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:333 */
+			#size-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:334 */
+			reg = < 0x40048000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:335 */
+			resets = < &reset 0x4 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:336 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:337 */
+			interrupts = < 0x18 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:338 */
+			interrupt-names = "i2c1";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:339 */
+			pinctrl-0 = < &i2c1_default >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:111 */
+			pinctrl-names = "default";           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:112 */
+			status = "disabled";                 /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:113 */
+			clock-frequency = < 0x61a80 >;       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:114 */
+		};
+
+		/* node '/soc/watchdog@40058000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:343 */
+		wdt0: watchdog@40058000 {
+			compatible = "raspberrypi,pico-watchdog"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:344 */
+			reg = < 0x40058000 0x1000 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:345 */
+			clocks = < &clocks 0x4 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:346 */
+			status = "okay";                          /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:129 */
+		};
+
+		/* node '/soc/usbd@50110000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:350 */
+		usbd: zephyr_udc0: usbd@50110000 {
+			compatible = "raspberrypi,pico-usbd"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:351 */
+			reg = < 0x50110000 0x10000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:352 */
+			resets = < &reset 0x18 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:353 */
+			clocks = < &clocks 0x7 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:354 */
+			interrupts = < 0x5 0x3 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:355 */
+			interrupt-names = "usbctrl";          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:356 */
+			num-bidir-endpoints = < 0x10 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:357 */
+			status = "okay";                      /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:144 */
+
+			/* node '/soc/usbd@50110000/cdc_acm_uart0' defined in DormDash/dorm_dash_firmware/app.overlay:43 */
+			cdc_acm_uart0: cdc_acm_uart0 {
+				compatible = "zephyr,cdc-acm-uart"; /* in DormDash/dorm_dash_firmware/app.overlay:44 */
+			};
+		};
+
+		/* node '/soc/pwm@40050000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:361 */
+		pwm: pwm@40050000 {
+			compatible = "raspberrypi,pico-pwm"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:362 */
+			reg = < 0x40050000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:363 */
+			resets = < &reset 0xe >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:364 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:365 */
+			interrupts = < 0x4 0x3 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:366 */
+			interrupt-names = "PWM_IRQ_WRAP";    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:367 */
+			#pwm-cells = < 0x3 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:369 */
+			pinctrl-0 = < &pwm_ch4b_default >;   /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:148 */
+			pinctrl-names = "default";           /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:149 */
+			status = "okay";                     /* in DormDash/dorm_dash_firmware/app.overlay:74 */
+			phandle = < 0x1d >;                  /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:21 */
+		};
+
+		/* node '/soc/timer@40054000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:372 */
+		timer: timer@40054000 {
+			compatible = "raspberrypi,pico-timer"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:373 */
+			reg = < 0x40054000 0x1000 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:374 */
+			resets = < &reset 0x15 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:375 */
+			clocks = < &clocks 0x4 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:376 */
+			interrupts = < 0x0 0x3 >,
+			             < 0x1 0x3 >,
+			             < 0x2 0x3 >,
+			             < 0x3 0x3 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:377 */
+			interrupt-names = "TIMER_IRQ_0",
+			                  "TIMER_IRQ_1",
+			                  "TIMER_IRQ_2",
+			                  "TIMER_IRQ_3";       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:381 */
+			status = "okay";                       /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:125 */
+		};
+
+		/* node '/soc/dma@50000000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:388 */
+		dma: dma@50000000 {
+			compatible = "raspberrypi,pico-dma"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:389 */
+			reg = < 0x50000000 0x10000 >;        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:390 */
+			resets = < &reset 0x2 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:391 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:392 */
+			interrupts = < 0xb 0x3 >,
+			             < 0xc 0x3 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:393 */
+			interrupt-names = "dma0",
+			                  "dma1";            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:395 */
+			dma-channels = < 0xc >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:396 */
+			status = "disabled";                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:397 */
+			#dma-cells = < 0x3 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:398 */
+		};
+
+		/* node '/soc/vreg@40064000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:401 */
+		vreg: vreg@40064000 {
+			compatible = "raspberrypi,core-supply-regulator"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:402 */
+			reg = < 0x40064000 0x1 >;                         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:403 */
+			status = "okay";                                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:404 */
+			raspberrypi,brown-out-detection;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:405 */
+			raspberrypi,brown-out-threshold = < 0xd1f60 >;    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:406 */
+			regulator-always-on;                              /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:153 */
+			regulator-allowed-modes = < 0x0 >;                /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:154 */
+		};
+
+		/* node '/soc/pio@50200000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:409 */
+		pio0: pio@50200000 {
+			compatible = "raspberrypi,pico-pio"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:410 */
+			reg = < 0x50200000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:411 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:412 */
+			resets = < &reset 0xa >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:413 */
+			status = "disabled";                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:414 */
+		};
+
+		/* node '/soc/pio@50300000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:417 */
+		pio1: pio@50300000 {
+			compatible = "raspberrypi,pico-pio"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:418 */
+			reg = < 0x50300000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:419 */
+			clocks = < &clocks 0x5 >;            /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:420 */
+			resets = < &reset 0xb >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:421 */
+			status = "disabled";                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:422 */
+		};
+
+		/* node '/soc/rtc@4005c000' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:425 */
+		rtc: rtc@4005c000 {
+			compatible = "raspberrypi,pico-rtc"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:426 */
+			reg = < 0x4005c000 0x1000 >;         /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:427 */
+			interrupts = < 0x19 0x3 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:428 */
+			interrupt-names = "rtc";             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:429 */
+			resets = < &reset 0xf >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:430 */
+			alarms-count = < 0x1 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:431 */
+			clocks = < &clocks 0x9 >;            /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:133 */
+			status = "okay";                     /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:134 */
+		};
+	};
+
+	/* node '/cpus' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:31 */
+	cpus {
+		#address-cells = < 0x1 >; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:32 */
+		#size-cells = < 0x0 >;    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:33 */
+
+		/* node '/cpus/cpu@0' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:35 */
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-m0+"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:36 */
+			reg = < 0x0 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:37 */
+		};
+
+		/* node '/cpus/cpu@1' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:40 */
+		cpu1: cpu@1 {
+			compatible = "arm,cortex-m0+"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:41 */
+			reg = < 0x1 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:42 */
+		};
+	};
+
+	/* node '/clocks' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:46 */
+	clocks {
+
+		/* node '/clocks/clk-gpout0' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:47 */
+		clk_gpout0: clk-gpout0 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:48 */
+			clocks = < &pll_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:49 */
+			clock-names = "pll_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:50 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:51 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:52 */
+			#address-cells = < 0x0 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:53 */
+			phandle = < 0x2 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-gpout1' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:56 */
+		clk_gpout1: clk-gpout1 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:57 */
+			clocks = < &pll_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:58 */
+			clock-names = "pll_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:59 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:60 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:61 */
+			phandle = < 0x3 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-gpout2' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:64 */
+		clk_gpout2: clk-gpout2 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:65 */
+			clocks = < &pll_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:66 */
+			clock-names = "pll_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:67 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:68 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:69 */
+			phandle = < 0x4 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-gpout3' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:72 */
+		clk_gpout3: clk-gpout3 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:73 */
+			clocks = < &pll_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:74 */
+			clock-names = "pll_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:75 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:76 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:77 */
+			phandle = < 0x5 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-ref' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:80 */
+		clk_ref: clk-ref {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:81 */
+			clocks = < &xosc >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:82 */
+			clock-names = "xosc";                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:83 */
+			clock-frequency = < 0xb71b00 >;        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:84 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:85 */
+			phandle = < 0x6 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-sys' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:88 */
+		clk_sys: clk-sys {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:89 */
+			clocks = < &pll_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:90 */
+			clock-names = "pll_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:91 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:92 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:93 */
+			phandle = < 0x7 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-usb' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:96 */
+		clk_usb: clk-usb {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:97 */
+			clocks = < &pll_usb >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:98 */
+			clock-names = "pll_usb";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:99 */
+			clock-frequency = < 0x2dc6c00 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:100 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:101 */
+			phandle = < 0x9 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-adc' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:104 */
+		clk_adc: clk-adc {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:105 */
+			clocks = < &pll_usb >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:106 */
+			clock-names = "pll_usb";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:107 */
+			clock-frequency = < 0x2dc6c00 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:108 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:109 */
+			phandle = < 0xa >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-rtc' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:112 */
+		clk_rtc: clk-rtc {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:113 */
+			clocks = < &pll_usb >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:114 */
+			clock-names = "pll_usb";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:115 */
+			clock-frequency = < 0xb71b >;          /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:116 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:117 */
+			phandle = < 0xb >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/clk-peri' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:120 */
+		clk_peri: clk-peri {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:121 */
+			clocks = < &clk_sys >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:122 */
+			clock-names = "clk_sys";               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:123 */
+			clock-frequency = < 0x7735940 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:124 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:125 */
+			phandle = < 0x8 >;                     /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/pll-sys' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:128 */
+		pll_sys: pll-sys {
+			compatible = "raspberrypi,pico-pll"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:129 */
+			clocks = < &xosc >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:130 */
+			clock-names = "xosc";                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:131 */
+			clock-div = < 0x1 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:132 */
+			fb-div = < 0x7d >;                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:133 */
+			post-div1 = < 0x6 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:134 */
+			post-div2 = < 0x2 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:135 */
+			#clock-cells = < 0x0 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:136 */
+			phandle = < 0xc >;                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/pll-usb' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:139 */
+		pll_usb: pll-usb {
+			compatible = "raspberrypi,pico-pll"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:140 */
+			clocks = < &xosc >;                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:141 */
+			clock-names = "xosc";                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:142 */
+			clock-div = < 0x1 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:143 */
+			fb-div = < 0x64 >;                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:144 */
+			post-div1 = < 0x5 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:145 */
+			post-div2 = < 0x5 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:146 */
+			#clock-cells = < 0x0 >;              /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:147 */
+			phandle = < 0xd >;                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/rosc' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:150 */
+		rosc: rosc {
+			compatible = "raspberrypi,pico-rosc"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:151 */
+			clock-frequency = < 0x632ea0 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:152 */
+			range = < 0xaa0 >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:153 */
+			stage-drive-strength = < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >,
+			                       < 0x0 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:154 */
+			clock-div = < 0x10 >;                 /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:155 */
+			phase = < 0x0 >;                      /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:156 */
+			#clock-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:157 */
+			phandle = < 0xf >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/rosc-ph' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:160 */
+		rosc_ph: rosc-ph {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:161 */
+			clock-frequency = < 0x632ea0 >;        /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:162 */
+			clocks = < &rosc >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:163 */
+			clock-names = "rosc";                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:164 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:165 */
+			phandle = < 0x10 >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/xosc' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:168 */
+		xosc: xosc {
+			compatible = "raspberrypi,pico-xosc"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:169 */
+			clock-frequency = < 0xb71b00 >;       /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:170 */
+			#clock-cells = < 0x0 >;               /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:171 */
+			phandle = < 0xe >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/gpin0' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:174 */
+		gpin0: gpin0 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:175 */
+			status = "disabled";                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:176 */
+			clock-frequency = < 0x0 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:177 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:178 */
+			phandle = < 0x11 >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+
+		/* node '/clocks/gpin1' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:181 */
+		gpin1: gpin1 {
+			compatible = "raspberrypi,pico-clock"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:182 */
+			status = "disabled";                   /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:183 */
+			clock-frequency = < 0x0 >;             /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:184 */
+			#clock-cells = < 0x0 >;                /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:185 */
+			phandle = < 0x12 >;                    /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:229 */
+		};
+	};
+
+	/* node '/pin-controller' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:436 */
+	pinctrl: pin-controller {
+		compatible = "raspberrypi,pico-pinctrl"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:437 */
+
+		/* node '/pin-controller/uart0_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:8 */
+		uart0_default: uart0_default {
+			phandle = < 0x16 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:95 */
+
+			/* node '/pin-controller/uart0_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:9 */
+			group1 {
+				pinmux = < 0x2 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:10 */
+			};
+
+			/* node '/pin-controller/uart0_default/group2' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:12 */
+			group2 {
+				pinmux = < 0x22 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:13 */
+				input-enable;      /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:14 */
+			};
+		};
+
+		/* node '/pin-controller/i2c0_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:18 */
+		i2c0_default: i2c0_default {
+			phandle = < 0x19 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:106 */
+
+			/* node '/pin-controller/i2c0_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:19 */
+			group1 {
+				pinmux = < 0x83 >,
+				         < 0xa3 >;    /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:20 */
+				input-enable;         /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:21 */
+				input-schmitt-enable; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:22 */
+			};
+		};
+
+		/* node '/pin-controller/i2c1_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:26 */
+		i2c1_default: i2c1_default {
+			phandle = < 0x1a >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:111 */
+
+			/* node '/pin-controller/i2c1_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:27 */
+			group1 {
+				pinmux = < 0xc3 >,
+				         < 0xe3 >;    /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:28 */
+				input-enable;         /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:29 */
+				input-schmitt-enable; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:30 */
+			};
+		};
+
+		/* node '/pin-controller/spi0_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:34 */
+		spi0_default: spi0_default {
+			phandle = < 0x17 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:120 */
+
+			/* node '/pin-controller/spi0_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:35 */
+			group1 {
+				pinmux = < 0x221 >,
+				         < 0x241 >,
+				         < 0x261 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:36 */
+			};
+
+			/* node '/pin-controller/spi0_default/group2' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:38 */
+			group2 {
+				pinmux = < 0x201 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:39 */
+				input-enable;       /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:40 */
+			};
+		};
+
+		/* node '/pin-controller/pwm_ch4b_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:44 */
+		pwm_ch4b_default: pwm_ch4b_default {
+			phandle = < 0x1b >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:148 */
+
+			/* node '/pin-controller/pwm_ch4b_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:45 */
+			group1 {
+				pinmux = < 0x324 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:46 */
+			};
+
+			/* node '/pin-controller/pwm_ch4b_default/pwm_slice7_group' defined in DormDash/dorm_dash_firmware/app.overlay:83 */
+			pwm_slice7: pwm_slice7_group {
+				pinmux = < 0x1c4 >,
+				         < 0x1e4 >; /* in DormDash/dorm_dash_firmware/app.overlay:84 */
+			};
+
+			/* node '/pin-controller/pwm_ch4b_default/pwm_slice1_group' defined in DormDash/dorm_dash_firmware/app.overlay:87 */
+			pwm_slice1: pwm_slice1_group {
+				pinmux = < 0x244 >,
+				         < 0x264 >; /* in DormDash/dorm_dash_firmware/app.overlay:88 */
+			};
+		};
+
+		/* node '/pin-controller/adc_default' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:50 */
+		adc_default: adc_default {
+			phandle = < 0x18 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:139 */
+
+			/* node '/pin-controller/adc_default/group1' defined in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:51 */
+			group1 {
+				pinmux = < 0x34f >,
+				         < 0x36f >,
+				         < 0x38f >,
+				         < 0x3af >; /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:52 */
+				input-enable;       /* in zephyr/boards/raspberrypi/common/rpi_pico-pinctrl-common.dtsi:53 */
+			};
+		};
+	};
+
+	/* node '/dietemp' defined in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:440 */
+	die_temp: dietemp {
+		compatible = "raspberrypi,pico-temp"; /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:441 */
+		io-channels = < &adc 0x4 >;           /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:442 */
+		status = "disabled";                  /* in zephyr/dts/arm/raspberrypi/rpi_pico/rp2040.dtsi:443 */
+	};
+
+	/* node '/connector' defined in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:31 */
+	pico_header: connector {
+		compatible = "raspberrypi,pico-header";    /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:32 */
+		#gpio-cells = < 0x2 >;                     /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:33 */
+		gpio-map-mask = < 0xffffffff 0xffffffc0 >; /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:34 */
+		gpio-map-pass-thru = < 0x0 0x3f >;         /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:35 */
+		gpio-map = < 0x0 0x0 &gpio0 0x0 0x0 >,
+		           < 0x1 0x0 &gpio0 0x1 0x0 >,
+		           < 0x2 0x0 &gpio0 0x2 0x0 >,
+		           < 0x3 0x0 &gpio0 0x3 0x0 >,
+		           < 0x4 0x0 &gpio0 0x4 0x0 >,
+		           < 0x5 0x0 &gpio0 0x5 0x0 >,
+		           < 0x6 0x0 &gpio0 0x6 0x0 >,
+		           < 0x7 0x0 &gpio0 0x7 0x0 >,
+		           < 0x8 0x0 &gpio0 0x8 0x0 >,
+		           < 0x9 0x0 &gpio0 0x9 0x0 >,
+		           < 0xa 0x0 &gpio0 0xa 0x0 >,
+		           < 0xb 0x0 &gpio0 0xb 0x0 >,
+		           < 0xc 0x0 &gpio0 0xc 0x0 >,
+		           < 0xd 0x0 &gpio0 0xd 0x0 >,
+		           < 0xe 0x0 &gpio0 0xe 0x0 >,
+		           < 0xf 0x0 &gpio0 0xf 0x0 >,
+		           < 0x10 0x0 &gpio0 0x10 0x0 >,
+		           < 0x11 0x0 &gpio0 0x11 0x0 >,
+		           < 0x12 0x0 &gpio0 0x12 0x0 >,
+		           < 0x13 0x0 &gpio0 0x13 0x0 >,
+		           < 0x14 0x0 &gpio0 0x14 0x0 >,
+		           < 0x15 0x0 &gpio0 0x15 0x0 >,
+		           < 0x16 0x0 &gpio0 0x16 0x0 >,
+		           < 0x1a 0x0 &gpio0 0x1a 0x0 >,
+		           < 0x1b 0x0 &gpio0 0x1b 0x0 >,
+		           < 0x1c 0x0 &gpio0 0x1c 0x0 >;   /* in zephyr/boards/raspberrypi/rpi_pico/rpi_pico-common.dtsi:36 */
+	};
+
+	/* node '/leds' defined in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:9 */
+	leds {
+		compatible = "gpio-leds"; /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:10 */
+
+		/* node '/leds/led_0' defined in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:11 */
+		led0: led_0 {
+			gpios = < &gpio0 0x19 0x0 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:12 */
+			label = "LED";               /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:13 */
+		};
+	};
+
+	/* node '/pwm_leds' defined in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:17 */
+	pwm_leds {
+		compatible = "pwm-leds"; /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:18 */
+		status = "disabled";     /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:19 */
+
+		/* node '/pwm_leds/pwm_led_0' defined in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:20 */
+		pwm_led0: pwm_led_0 {
+			pwms = < &pwm 0x9 0x1312d00 0x0 >; /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:21 */
+			label = "PWM_LED";                 /* in zephyr/boards/raspberrypi/common/rpi_pico-led.dtsi:22 */
+		};
+	};
+
+	/* node '/motor_pwms' defined in DormDash/dorm_dash_firmware/app.overlay:8 */
+	motor_pwms: motor_pwms {
+		compatible = "dormdash,motor-pwms"; /* in DormDash/dorm_dash_firmware/app.overlay:9 */
+		max-pulse = < 0xc350 >;             /* in DormDash/dorm_dash_firmware/app.overlay:11 */
+		pwms = < &pwm 0xe 0xc350 0x0 >,
+		       < &pwm 0xf 0xc350 0x0 >,
+		       < &pwm 0x12 0xc350 0x0 >,
+		       < &pwm 0x13 0xc350 0x0 >;    /* in DormDash/dorm_dash_firmware/app.overlay:13 */
+		pwm-names = "motor0_forward",
+		            "motor0_backward",
+		            "motor1_forward",
+		            "motor1_backward";      /* in DormDash/dorm_dash_firmware/app.overlay:18 */
+	};
+
+	/* node '/qenc0' defined in DormDash/dorm_dash_firmware/app.overlay:21 */
+	qenc0: qenc0 {
+		compatible = "dormdash,qenc-gpios"; /* in DormDash/dorm_dash_firmware/app.overlay:22 */
+		gpios = < &gpio0 0x6 0x0 >,
+		        < &gpio0 0x7 0x0 >;         /* in DormDash/dorm_dash_firmware/app.overlay:23 */
+		status = "okay";                    /* in DormDash/dorm_dash_firmware/app.overlay:25 */
+	};
+
+	/* node '/qenc1' defined in DormDash/dorm_dash_firmware/app.overlay:28 */
+	qenc1: qenc1 {
+		compatible = "dormdash,qenc-gpios"; /* in DormDash/dorm_dash_firmware/app.overlay:29 */
+		gpios = < &gpio0 0x8 0x0 >,
+		        < &gpio0 0x9 0x0 >;         /* in DormDash/dorm_dash_firmware/app.overlay:30 */
+		status = "okay";                    /* in DormDash/dorm_dash_firmware/app.overlay:32 */
+	};
+};
