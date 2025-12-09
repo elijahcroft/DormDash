@@ -29,7 +29,9 @@ export default function Navbar() {
       </div>
   
       <div className="flex flex-col md:flex-row gap-2 md:gap-x-5">
-        Nothing yet....
+        <Link href="/dormyinuse" className={linkClass('/dormyinuse')}>
+          Queue
+        </Link>
       </div>
     </div>
   );

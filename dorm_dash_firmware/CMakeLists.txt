@@ -10,6 +10,10 @@ project(dorm_dash_robot)
 target_sources(app PRIVATE
 	src/main.c
 	src/leds.c
-	src/distance_sensor.c
+#	src/distance_sensor.c
 	src/pwm_motor.c
+	src/quadrature_decoder.c
+	src/motor_control.c
+	src/pid.c
+	src/uart_echo.c
 )
