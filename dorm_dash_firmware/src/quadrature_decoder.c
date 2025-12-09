@@ -174,17 +174,17 @@ int QuadratureDecoder_Start(void)
 
 	return 0;
 
-    while (true)
-    {
-        long left_pos = QuadratureEncoder_GetPos(Q_ENCODER_LEFT_MOTOR);
-        long right_pos = QuadratureEncoder_GetPos(Q_ENCODER_RIGHT_MOTOR);
+    //while (true)
+    //{
+    //    long left_pos = QuadratureEncoder_GetPos(Q_ENCODER_LEFT_MOTOR);
+    //    long right_pos = QuadratureEncoder_GetPos(Q_ENCODER_RIGHT_MOTOR);
 
 		//LOG_INF("callback0: %p", &quad_encoders[0].interrupt_callback);
 		//LOG_INF("callback1: %p", &quad_encoders[1].interrupt_callback);
 
-        LOG_INF("left_motor__: %ld | right_motor: %ld", left_pos, right_pos);
-        k_sleep(K_MSEC(10));
-    }
+   //     LOG_INF("left_motor__: %ld | right_motor: %ld", left_pos, right_pos);
+    //    k_sleep(K_MSEC(10));
+    //}
 
-    return 0;
+    //return 0;
 }

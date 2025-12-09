@@ -59,7 +59,7 @@
     lidar0: lidar@45 {
         compatible = "st,vl53l0x";
         reg = <0x45>; // I2C Address
-        status = "disabled";
+        status = "okay";
 
         xshut-gpios = <&gpio0 16 GPIO_ACTIVE_LOW>;
     };
@@ -67,7 +67,7 @@
     lidar1: lidar@46 {
         compatible = "st,vl53l0x";
         reg = <0x46>; // I2C Address
-        status = "disabled";
+        status = "okay";
 
         xshut-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>;
     };
@@ -75,7 +75,7 @@
     lidar2: lidar@47 {
         compatible = "st,vl53l0x";
         reg = <0x47>; // I2C Address
-        status = "disabled";
+        status = "okay";
 
         xshut-gpios = <&gpio0 18 GPIO_ACTIVE_LOW>;
     };
@@ -83,7 +83,7 @@
     lidar3: lidar@48 {
         compatible = "st,vl53l0x";
         reg = <0x48>; // I2C Address
-        status = "disabled";
+        status = "okay";
 
         xshut-gpios = <&gpio0 19 GPIO_ACTIVE_LOW>;
     };
@@ -91,7 +91,7 @@
     lidar4: lidar@49 {
         compatible = "st,vl53l0x";
         reg = <0x49>; // I2C Address
-        status = "disabled";
+        status = "okay";
 
         xshut-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
     };
